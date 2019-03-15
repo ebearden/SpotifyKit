@@ -154,11 +154,21 @@ public struct SpotifyPlaylist: SpotifySearchItem, SpotifyLibraryItem, SpotifyTra
 }
 
 public struct SpotifyArtist: SpotifySearchItem {
+    struct Image: Decodable {
+        var url: String
+    }
+
     public var id:   String
     public var uri:  String
     public var name: String
     
     public static let type: SpotifyItemType = .artist
+    
+    var images: [Image]? = [Image]()
+    
+    public var artUri: String? {
+        return images?.first?.url
+    }
 }
 
 public struct SpotifyLibraryResponse<T> where T: SpotifyLibraryItem {
