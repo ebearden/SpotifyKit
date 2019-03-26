@@ -43,6 +43,7 @@ public protocol SpotifyItem: Decodable {
     var id:   String { get }
     var uri:  String { get }
     var name: String { get }
+    var artUri: String? { get }
     
     static var type: SpotifyItemType { get }
 }
@@ -67,7 +68,7 @@ public struct SpotifyUser: SpotifySearchItem {
     var display_name: String?
     var images:       [SpotifyImage]
     
-    public var artUri: String {
+    public var artUri: String? {
         return images.first?.url ?? ""
     }
 }
@@ -87,6 +88,10 @@ public struct SpotifyTrack: SpotifySearchItem, SpotifyLibraryItem {
     
     public var artist: SpotifyArtist {
         return artists.first!
+    }
+    
+    public var artUri: String? {
+        return album?.artUri
     }
 }
 
@@ -119,8 +124,8 @@ public struct SpotifyAlbum: SpotifySearchItem, SpotifyLibraryItem, SpotifyTrackC
         return artists.first!
     }
     
-    public var artUri: String {
-        return images.first!.url
+    public var artUri: String? {
+        return images.first?.url
     }
 }
 
@@ -139,6 +144,7 @@ public struct SpotifyPlaylist: SpotifySearchItem, SpotifyLibraryItem, SpotifyTra
     public var id:   String
     public var uri:  String
     public var name: String
+    public var artUri: String?
     
     var tracks: Tracks
     
